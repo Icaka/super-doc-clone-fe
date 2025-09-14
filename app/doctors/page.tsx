@@ -5,7 +5,7 @@ export default async function DoctorList() {
     return(
         <div>
             {doctors.map((d:any)=>
-                <p key={d.id}>{d.firstName} {d.lastName}</p>)
+                <p key={d.id}><a href={"/doctor/" + d.id}>{d.firstName} {d.lastName}</a></p>)
             }
         </div>
 
