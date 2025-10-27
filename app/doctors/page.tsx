@@ -1,11 +1,12 @@
+import {apiClient} from "@/api/client";
+
 export default async function DoctorList() {
-    const doctorsData = await fetch("http://localhost:8080/doctors")
-    const doctors = await doctorsData.json()
+    const doctors = await apiClient.getDoctors()
 
     return(
         <div>
-            {doctors.map((d:any)=>
-                <p key={d.id}><a href={"/doctor/" + d.id}>{d.firstName} {d.lastName}</a></p>)
+            {doctors.map((d)=>
+                <p key={d.id}><a href={"/doctors/" + d.id}>{d.firstName} {d.lastName}</a></p>)
             }
         </div>
 
