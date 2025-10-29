@@ -21,6 +21,16 @@ class APIClient {
         const reviewData = await fetch(this.url + "/doctors/" + id + "/reviews");
         return await reviewData.json();
     }
+
+    public async createReview(doctorId: string, rating: number, content: string) {
+        await fetch(this.url + "/doctors/" + doctorId + "/reviews/create", {
+            method: 'POST',
+            body: JSON.stringify({
+                score: rating,
+                text: content,
+            }),
+        });
+    }
 }
 
 export const apiClient = new APIClient("http://localhost:8080");
