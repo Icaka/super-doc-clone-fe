@@ -25,6 +25,7 @@ class APIClient {
     public async createReview(doctorId: string, rating: number, content: string) {
         await fetch(this.url + "/doctors/" + doctorId + "/reviews/create", {
             method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 score: rating,
                 text: content,
