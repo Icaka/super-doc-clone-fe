@@ -30,7 +30,7 @@ export default function Doctor() {
         <div className="p-5">
             <h1 className={"text-2xl font-bold"}>{doctor?.firstName} {doctor?.lastName}</h1>
             {doctor?.dateOfBirth&&<h1 className={"text-2xl font-bold"}>Age: <Timestamp relative date={doctor?.dateOfBirth??Date.now()} relativeTo={Date()} /></h1>}
-            <div style={{border: "dotted"}}>
+            <div className="p-3" style={{border: "1px solid"}}>
                 <h2 className={"text-1xl font-bold"}>Reviews:</h2>
                 <ul className="list-disc pl-5 ml-5">
                     {reviews?.map((re:Review)=>

@@ -23,13 +23,9 @@ export default function ReviewForm(params: ReviewFormParams) {
     }, [params, reviewText, ratingBox])
 
     return (
-        <form>
-            <button style={{padding: '10px 8px',backgroundColor: 'skyblue'}}
-                    onClick={createReview}
-                    color="#841584"
-            >Review!</button>
+        <form className="mt-8 p-2" style={{border:'1px solid'}}>
             <label>Review:
-                <input style={{border:'solid'}}
+                <input style={{border:'1px solid'}}
                     type="text"
                     value={reviewText}
                     onChange={handleChange}
@@ -39,6 +35,7 @@ export default function ReviewForm(params: ReviewFormParams) {
             {arr.map((i)=>
                 <label key={i}>
                     <input
+                        className="ml-2"
                         type="radio"
                         value={i}
                         checked={ratingBox === i}
@@ -46,6 +43,11 @@ export default function ReviewForm(params: ReviewFormParams) {
                     /> {i}
                 </label>
             )}
+            <br/>
+            <button style={{padding: '10px 8px',backgroundColor: 'skyblue'}}
+                                onClick={createReview}
+                                color="#841584"
+            >Review!</button>
         </form>
     )
 }
