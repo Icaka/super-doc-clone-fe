@@ -32,6 +32,11 @@ class APIClient {
             }),
         });
     }
+
+    public async searchDoctor(query: string): Promise<Doctor[]> {
+        const doctors = await fetch(this.url + "/doctors/search/" + query)
+        return await doctors.json();
+    }
 }
 
 export const apiClient = new APIClient("http://localhost:8080");
