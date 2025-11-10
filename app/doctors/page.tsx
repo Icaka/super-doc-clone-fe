@@ -21,15 +21,21 @@ export default function DoctorList() {
     }, []);
 
     useEffect(() => {
+        if(searchQuery == "") {
+            return
+        }
         async function searchDoctors() {
             const searchedDoctors = await apiClient.searchDoctor(searchQuery);
             setSearchedDoctors(searchedDoctors);
         }
         searchDoctors();
-    }, [searchQuery, searchedDoctors]);
+    }, [searchQuery]);
 
     const searchButton = () => {
-        setAllDoctors(searchedDoctors)
+        console.log("click")
+        if(searchQuery != "") {
+            setAllDoctors(searchedDoctors)
+        }
     }
 
     return(
