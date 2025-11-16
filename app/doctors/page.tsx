@@ -1,12 +1,11 @@
 "use client"
 import {apiClient} from "@/api/client";
-import {ChangeEvent, useEffect, useState} from "react";
+import {ChangeEvent, useCallback, useEffect, useState} from "react";
 import {Doctor as DoctorModel} from "@/api/models"
 
 export default function DoctorList() {
     const [allDoctors, setAllDoctors] = useState<DoctorModel[] | null>(null)
     const [searchQuery, setSearchQuery] = useState("")
-    const [searchedDoctors, setSearchedDoctors] = useState<DoctorModel[] | null>(null)
 
     function handleChange(e: ChangeEvent<HTMLInputElement>) {
         setSearchQuery(e.currentTarget.value);
@@ -20,23 +19,16 @@ export default function DoctorList() {
         getAllDoctors()
     }, []);
 
-    useEffect(() => {
-        if(searchQuery == "") {
-            return
-        }
-        async function searchDoctors() {
-            const searchedDoctors = await apiClient.searchDoctor(searchQuery);
-            setSearchedDoctors(searchedDoctors);
-        }
-        searchDoctors();
-    }, [searchQuery]);
-
-    const searchButton = () => {
+    const searchButton = useCallback(async () => {
         console.log("click")
         if(searchQuery != "") {
-            setAllDoctors(searchedDoctors)
+            async function searchDoctors() {
+                const searchedDoctors = await apiClient.searchDoctor(searchQuery);
+                setAllDoctors(searchedDoctors)
+            }
+            await searchDoctors();
         }
-    }
+    }, [searchQuery])
 
     return(
         <>
