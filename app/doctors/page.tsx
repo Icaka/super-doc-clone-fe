@@ -19,6 +19,11 @@ export default function DoctorList() {
         getAllDoctors()
     }, []);
 
+    const resetButton = useCallback(async () => {
+        const allDoctors: DoctorModel[] = await apiClient.getDoctors();
+        setAllDoctors(allDoctors)
+    }, [])
+
     const searchButton = useCallback(async () => {
         console.log("click")
         if(searchQuery != "") {
@@ -42,10 +47,14 @@ export default function DoctorList() {
                         />
                     </label>
                 </form>
-                <button style={{padding: '10px 8px',backgroundColor: 'skyblue'}}
+                <button style={{margin: '10px', padding: '10px 8px',backgroundColor: 'skyblue'}}
                         onClick={searchButton}
                         color="#841584"
                 >Search</button>
+                <button style={{margin: '10px', padding: '10px 8px',backgroundColor: 'skyblue'}}
+                        onClick={resetButton}
+                        color="#841584"
+                >Reset</button>
             </div>
             <div className="mt-8 p-2" style={{border:'1px solid'}}>
                 {allDoctors?.map((d)=>
