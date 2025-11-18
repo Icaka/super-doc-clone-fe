@@ -5,10 +5,13 @@ import {apiClient} from "@/api/client";
 import {useCallback, useEffect, useState} from "react";
 import {useParams} from "next/navigation";
 import ReviewForm from "@/app/doctors/[slug]/components/reviewForm";
+import {DayPicker} from "react-day-picker";
+import "react-day-picker/style.css";
 
 export default function Doctor() {
     const params = useParams<{slug: string}>()
     const [doctor, setDoctor] = useState<DoctorModel | null>(null)
+    const [selectedDate, setSelectedDate] = useState<Date>();
     useEffect(() => {
         async function fetchDoctor() {
             const doctorFetch = await apiClient.getDoctor(params.slug);
@@ -39,6 +42,15 @@ export default function Doctor() {
                 </ul>
             </div>
             <ReviewForm doctorId={params.slug}/>
+            <DayPicker
+                //className="content-center"
+                mode="single"
+                selected={selectedDate}
+                onSelect={setSelectedDate}
+                footer={
+                    selectedDate ? `Selected: ${selectedDate.toLocaleDateString()}` : "Pick a day."
+                }
+            />
         </div>
     )
 }
