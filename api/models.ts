@@ -14,3 +14,12 @@ export interface Review {
     score: number;
     text: string;
 }
+
+export interface Schedule {
+    id: number;
+    count: number;
+    length: number;
+    workStart: number;
+    date: Date;
+    doctor: Doctor;
+}

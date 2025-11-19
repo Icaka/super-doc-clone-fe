@@ -1,4 +1,4 @@
-import {Doctor, Review} from "@/api/models";
+import {Doctor, Review, Schedule} from "@/api/models";
 
 class APIClient {
     private readonly url: string | undefined;
@@ -36,6 +36,16 @@ class APIClient {
     public async searchDoctor(query: string): Promise<Doctor[]> {
         const doctors = await fetch(this.url + "/doctors/search/" + query)
         return await doctors.json();
+    }
+
+    public async getDoctorSchedule(id: string, currDate: Date | undefined): Promise<Schedule> {
+        const schedule = await fetch(this.url + "/doctors/" + id + "/schedule",
+            {
+                body: JSON.stringify({
+                    date: currDate,
+                }),
+            });
+        return await schedule.json();
     }
 }
 
