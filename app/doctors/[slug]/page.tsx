@@ -30,34 +30,39 @@ export default function Doctor() {
     }, [params]);
 
     const [schedule, setSchedule] = useState<Schedule | null>(null)
-    const [appointmentNums, setAppointmentNums] = useState([1, 2, 3, 4, 5])
+    //const [appointmentNums, setAppointmentNums] = useState([1, 2, 3, 4, 5])
     useEffect(() => {
         async function fetchDoctorScheduleByDate(){
+            console.log("selected Date: " + selectedDate);
             const scheduleFetch = await apiClient.getDoctorSchedule(params.slug, selectedDate);
             setSchedule(scheduleFetch)
-            setAppointmentNums([...appointmentNums, scheduleFetch.count])
+            //setAppointmentNums([...appointmentNums, scheduleFetch.count])
         }
         fetchDoctorScheduleByDate()
     }, [selectedDate]);
 
     const generateTimeSlots = () => {
         const slots = [];
-        const date = new Date();
-        const startHour = 9; // schedule?.workStart
-        if (startHour != null) {
-            date.setHours(startHour);
-        }
-        date.setMinutes(0);
-        let i = 0;
-        // @ts-ignore
-        while (i < 10) { // schedule?.count
-            const hours = date.getHours().toString().padStart(2, "0");
-            const minutes = date.getMinutes().toString().padStart(2, "0");
+        if(schedule != undefined) {
+            const date = new Date();
+            console.log("date: " + date);
+            const startHour = schedule?.workStart;
+            console.log("startHour: " + startHour);
+            if (startHour != null) {
+                date.setHours(startHour);
+            }
+            date.setMinutes(0);
+            let i = 0;
+            // @ts-ignore
+            while (i < 10) { // schedule?.count
+                const hours = date.getHours().toString().padStart(2, "0");
+                const minutes = date.getMinutes().toString().padStart(2, "0");
 
-            slots.push(`${hours}:${minutes}`);
+                slots.push(`${hours}:${minutes}`);
 
-            date.setMinutes(date.getMinutes() + 30);
-            i++;
+                date.setMinutes(date.getMinutes() + 30);
+                i++;
+            }
         }
         return slots;
     };

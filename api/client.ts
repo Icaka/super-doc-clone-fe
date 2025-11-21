@@ -39,13 +39,19 @@ class APIClient {
     }
 
     public async getDoctorSchedule(id: string, currDate: Date | undefined): Promise<Schedule> {
-        const schedule = await fetch(this.url + "/doctors/" + id + "/schedule",
-            {
-                body: JSON.stringify({
-                    date: currDate,
-                }),
-            });
-        return await schedule.json();
+        if(currDate == undefined) {
+            throw new Error("current Date is undefined");
+        }
+
+        const date = currDate?.toISOString().split("T")[0]; // YYYY-MM-DD
+
+        const response = await fetch(`${this.url}/doctors/${id}/schedule?date=${currDate}`);
+
+        if (!response.ok) {
+            throw new Error("Failed to fetch doctor schedule");
+        }
+
+        return await response.json();
     }
 }
 
