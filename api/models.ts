@@ -19,7 +19,7 @@ export interface Schedule {
     id: number;
     count: number;
     length: number;
-    workStart: number;
-    date: Date;
+    start: string;
+    date: string;
     doctor: Doctor;
 }

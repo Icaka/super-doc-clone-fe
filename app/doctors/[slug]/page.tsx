@@ -11,7 +11,7 @@ import "react-day-picker/style.css";
 export default function Doctor() {
     const params = useParams<{slug: string}>()
     const [doctor, setDoctor] = useState<DoctorModel | null>(null)
-    const [selectedDate, setSelectedDate] = useState<Date>();
+    const [selectedDate, setSelectedDate] = useState<Date | undefined>(undefined);
     useEffect(() => {
         async function fetchDoctor() {
             const doctorFetch = await apiClient.getDoctor(params.slug);
@@ -30,36 +30,32 @@ export default function Doctor() {
     }, [params]);
 
     const [schedule, setSchedule] = useState<Schedule | null>(null)
-    //const [appointmentNums, setAppointmentNums] = useState([1, 2, 3, 4, 5])
     useEffect(() => {
         async function fetchDoctorScheduleByDate(){
-            console.log("selected Date: " + selectedDate);
             const scheduleFetch = await apiClient.getDoctorSchedule(params.slug, selectedDate);
             setSchedule(scheduleFetch)
-            //setAppointmentNums([...appointmentNums, scheduleFetch.count])
         }
         fetchDoctorScheduleByDate()
     }, [selectedDate]);
 
     const generateTimeSlots = () => {
         const slots = [];
+        console.log(schedule)
         if(schedule != undefined) {
             const date = new Date();
-            console.log("date: " + date);
-            const startHour = schedule?.workStart;
-            console.log("startHour: " + startHour);
+            const startHour = schedule?.start;
             if (startHour != null) {
-                date.setHours(startHour);
+                date.setHours(parseInt(startHour.split(":")[0]));
             }
             date.setMinutes(0);
             let i = 0;
             // @ts-ignore
-            while (i < 10) { // schedule?.count
+            while (i < schedule?.count) {
                 const hours = date.getHours().toString().padStart(2, "0");
                 const minutes = date.getMinutes().toString().padStart(2, "0");
 
                 slots.push(`${hours}:${minutes}`);
-
+                //console.log(slots.pop());
                 date.setMinutes(date.getMinutes() + 30);
                 i++;
             }
