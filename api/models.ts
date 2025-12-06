@@ -22,4 +22,5 @@ export interface Schedule {
     start: string;
     date: string;
     doctor: Doctor;
+    takenSlots: number[];
 }

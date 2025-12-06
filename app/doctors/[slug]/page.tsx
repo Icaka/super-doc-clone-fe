@@ -54,8 +54,12 @@ export default function Doctor() {
                 const hours = date.getHours().toString().padStart(2, "0");
                 const minutes = date.getMinutes().toString().padStart(2, "0");
 
-                slots.push(`${hours}:${minutes}`);
-                //console.log(slots.pop());
+                let status = 'free';
+                if(schedule?.takenSlots.includes(i+1)){
+                    status = 'taken'
+                }
+
+                slots.push(`${hours}:${minutes} - ${status}`);
                 date.setMinutes(date.getMinutes() + 30);
                 i++;
             }
