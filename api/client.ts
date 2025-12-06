@@ -43,8 +43,7 @@ class APIClient {
             // @ts-ignore
             return;
         }
-
-        const date = currDate?.toISOString().split("T")[0]; // YYYY-MM-DD
+        const date = currDate?.toLocaleDateString("en-CA").split("T")[0]; // YYYY-MM-DD
         const response = await fetch(`${this.url}/doctors/${id}/schedule?date=${date}`);
 
         if (!response.ok) {

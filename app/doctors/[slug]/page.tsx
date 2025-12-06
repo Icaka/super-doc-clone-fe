@@ -40,7 +40,7 @@ export default function Doctor() {
 
     const generateTimeSlots = () => {
         const slots = [];
-        console.log(schedule)
+
         if(schedule != undefined) {
             const date = new Date();
             const startHour = schedule?.start;
