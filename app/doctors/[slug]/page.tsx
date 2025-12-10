@@ -7,6 +7,8 @@ import {useParams} from "next/navigation";
 import ReviewForm from "@/app/doctors/[slug]/components/reviewForm";
 import {DayPicker} from "react-day-picker";
 import "react-day-picker/style.css";
+import {generateTimeSlots} from "@/app/doctors/[slug]/utils";
+import SlotButton from "@/app/doctors/[slug]/components/slotButton";
 
 export default function Doctor() {
     const params = useParams<{slug: string}>()
@@ -38,35 +40,6 @@ export default function Doctor() {
         fetchDoctorScheduleByDate()
     }, [selectedDate]);
 
-    const generateTimeSlots = () => {
-        const slots = [];
-
-        if(schedule != undefined) {
-            const date = new Date();
-            const startHour = schedule?.start;
-            if (startHour != null) {
-                date.setHours(parseInt(startHour.split(":")[0]));
-            }
-            date.setMinutes(0);
-            let i = 0;
-            // @ts-ignore
-            while (i < schedule?.count) {
-                const hours = date.getHours().toString().padStart(2, "0");
-                const minutes = date.getMinutes().toString().padStart(2, "0");
-
-                let status = 'free';
-                if(schedule?.takenSlots.includes(i+1)){
-                    status = 'taken'
-                }
-
-                slots.push(`${hours}:${minutes} - ${status}`);
-                date.setMinutes(date.getMinutes() + 30);
-                i++;
-            }
-        }
-        return slots;
-    };
-
     return(
         <div className="p-5">
             <h1 className={"text-2xl font-bold"}>{doctor?.firstName} {doctor?.lastName}</h1>
@@ -91,9 +64,9 @@ export default function Doctor() {
             />
             <div className="p-3" style={{border: "1px solid"}}>
                 <h2 className={"text-1xl font-bold"}>Time Slots:</h2>
-                <ul className="list-disc pl-5 ml-5">
-                    {generateTimeSlots().map((slot)=>
-                        <li key={slot}>{slot}</li>
+                <ul className="list-disc">
+                    {generateTimeSlots(schedule).map((slot)=>
+                        <SlotButton key={slot.time} slot={slot.time} booked={slot.status}/>
                     )}
                 </ul>
             </div>
