@@ -9,6 +9,7 @@ import {DayPicker} from "react-day-picker";
 import "react-day-picker/style.css";
 import {generateTimeSlots} from "@/app/doctors/[slug]/utils";
 import SlotButton from "@/app/doctors/[slug]/components/slotButton";
+import ScheduleSection from "@/app/doctors/[slug]/components/scheduleSection";
 
 export default function Doctor() {
     const params = useParams<{slug: string}>()
@@ -62,14 +63,7 @@ export default function Doctor() {
                     selectedDate ? `Selected: ${selectedDate.toLocaleDateString()}` : "Pick a day."
                 }
             />
-            <div className="p-3" style={{border: "1px solid"}}>
-                <h2 className={"text-1xl font-bold"}>Time Slots:</h2>
-                <ul className="list-disc">
-                    {generateTimeSlots(schedule).map((slot)=>
-                        <SlotButton key={slot.time} slot={slot.time} booked={slot.status}/>
-                    )}
-                </ul>
-            </div>
+            <ScheduleSection doctorId={params.slug} schedule={schedule}/>
         </div>
     )
 }

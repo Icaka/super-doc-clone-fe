@@ -1,7 +1,7 @@
 import {Schedule} from "@/api/models"
 
 export const generateTimeSlots = (schedule: Schedule | null) => {
-    const slots: {time: string, status: boolean}[] = [];
+    const slots: {slotNum: number, time: string, status: boolean}[] = [];
 
     if(schedule != undefined) {
         const date = new Date();
@@ -15,9 +15,10 @@ export const generateTimeSlots = (schedule: Schedule | null) => {
             const hours = date.getHours().toString().padStart(2, "0");
             const minutes = date.getMinutes().toString().padStart(2, "0");
 
-            let status = schedule?.takenSlots.includes(i+1);
+            let status = schedule?.bookedSlots.includes(i+1);
             let time = `${hours}:${minutes}`;
-            slots.push({time, status});
+            let slotNum: number = i;
+            slots.push({slotNum, time, status});
             date.setMinutes(date.getMinutes() + 30);
             i++;
         }
