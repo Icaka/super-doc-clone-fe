@@ -13,9 +13,9 @@ export default function ScheduleSection(params: ScheduleSectionParams) {
 
     const [selectedButton, setSelectedButton] = useState<number | null>(null)
 
-    const bookButton = () => {
-
-    }
+    const bookButton = useCallback(async () => {
+        await apiClient.createAppointment(params.doctorId, params.schedule?.date, selectedButton);
+    }, [params, selectedButton])
 
     return (
         <div className="p-3" style={{border: "1px solid"}}>

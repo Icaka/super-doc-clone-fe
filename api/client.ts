@@ -33,8 +33,8 @@ class APIClient {
         });
     }
 
-    public async createAppointment(doctorId: string, date: string, slot: number) {
-        await fetch(this.url + "/doctors/" + doctorId + "/appointments/create", {
+    public async createAppointment(doctorId: string, date: string | undefined, slot: number | null) {
+        await fetch(this.url + "/doctor/" + doctorId + "/appointments/create", {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
