@@ -17,7 +17,7 @@ export const generateTimeSlots = (schedule: Schedule | null) => {
 
             let status = schedule?.bookedSlots.includes(i+1);
             let time = `${hours}:${minutes}`;
-            let slotNum: number = i;
+            let slotNum: number = i + 1;
             slots.push({slotNum, time, status});
             date.setMinutes(date.getMinutes() + 30);
             i++;

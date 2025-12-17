@@ -13,6 +13,13 @@ export default function ScheduleSection(params: ScheduleSectionParams) {
 
     const [selectedButton, setSelectedButton] = useState<number | null>(null)
 
+    const buttonSelection = (buttonBooked: boolean, slot: number)=> {
+        if(buttonBooked){
+            return;
+        }
+        setSelectedButton(slot);
+    }
+
     const bookButton = useCallback(async () => {
         await apiClient.createAppointment(params.doctorId, params.schedule?.date, selectedButton);
     }, [params, selectedButton])
@@ -23,7 +30,7 @@ export default function ScheduleSection(params: ScheduleSectionParams) {
             <ul className="list-disc">
                 {generateTimeSlots(params.schedule).map((slot)=>
                     <SlotButton key={slot.slotNum} slot={slot.slotNum} time={slot.time}
-                                booked={slot.status} selected={selectedButton === slot.slotNum} onSelect={setSelectedButton}/>
+                                booked={slot.status} selected={selectedButton === slot.slotNum} onSelect={buttonSelection}/>
                 )}
             </ul>
             <button
