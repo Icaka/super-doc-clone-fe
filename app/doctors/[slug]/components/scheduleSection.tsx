@@ -22,6 +22,9 @@ export default function ScheduleSection(params: ScheduleSectionParams) {
 
     const bookButton = useCallback(async () => {
         await apiClient.createAppointment(params.doctorId, params.schedule?.date, selectedButton);
+        if (selectedButton != null) {
+            params.schedule?.bookedSlots.push(selectedButton);
+        }
     }, [params, selectedButton])
 
     return (
@@ -34,7 +37,7 @@ export default function ScheduleSection(params: ScheduleSectionParams) {
                 )}
             </ul>
             <button
-                className={`mt-1 px-4 py-2 mr-1 rounded-md border`}
+                className={`mt-1 px-4 py-2 mr-1 rounded-md border hover:bg-fuchsia-300`}
                 onClick={bookButton}>Book</button>
         </div>
     )
