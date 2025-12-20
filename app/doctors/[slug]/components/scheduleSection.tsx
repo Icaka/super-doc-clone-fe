@@ -24,6 +24,7 @@ export default function ScheduleSection(params: ScheduleSectionParams) {
         await apiClient.createAppointment(params.doctorId, params.schedule?.date, selectedButton);
         if (selectedButton != null) {
             params.schedule?.bookedSlots.push(selectedButton);
+            setSelectedButton(null);
         }
     }, [params, selectedButton])
 
