@@ -49,7 +49,7 @@ export default function Doctor() {
                 <h2 className={"text-1xl font-bold"}>Reviews:</h2>
                 <ul className="list-disc pl-5 ml-5">
                     {reviews?.map((re:Review)=>
-                        <li key={re.id}>{re.text}: {re.score} </li>
+                        <li key={re.id}>{re.userFirstName} {re.userLastName}: {re.text} - {re.score} </li>
                     )}
                 </ul>
             </div>

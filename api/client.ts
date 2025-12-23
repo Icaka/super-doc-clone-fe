@@ -2,6 +2,7 @@ import {Doctor, Review, Schedule} from "@/api/models";
 
 class APIClient {
     private readonly url: string | undefined;
+    private currUserId = 1;
 
     public constructor(url: string){
         this.url = url;
@@ -29,6 +30,7 @@ class APIClient {
             body: JSON.stringify({
                 score: rating,
                 text: content,
+                user_id: this.currUserId
             }),
         });
     }

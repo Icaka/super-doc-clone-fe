@@ -13,6 +13,9 @@ export interface Review {
     doctor: Doctor;
     score: number;
     text: string;
+    userId:number;
+    userFirstName:string;
+    userLastName:string;
 }
 
 export interface Schedule {
