@@ -30,7 +30,7 @@ class APIClient {
             body: JSON.stringify({
                 score: rating,
                 text: content,
-                user_id: this.currUserId
+                userId: this.currUserId
             }),
         });
     }
@@ -42,6 +42,7 @@ class APIClient {
             body: JSON.stringify({
                 date: date,
                 slot: slot,
+                userId: this.currUserId
             }),
         })
     }
